@@ -11,6 +11,7 @@ class Program
 
         int userNumber = -1;
         while(userNumber !=0)
+
         {
             Console.Write("Enter a number: ");
 
@@ -35,7 +36,6 @@ class Program
         Console.WriteLine($"The avarage is: {average}");
 
         int max = numbers[0];
-
         foreach (int number in numbers)
         {
             if (number > max)
@@ -44,6 +44,34 @@ class Program
             }
         }
         Console.WriteLine($"The max is: {max}");
+
+        int? smallestPositive = null;
+
+        foreach (int number in numbers)
+        {
+            if (number > 0)
+            {
+                if (smallestPositive == null || number < smallestPositive)
+                {
+                    smallestPositive = number;
+                }
+            }
+        }
+
+        if (smallestPositive.HasValue)
+        {
+            Console.WriteLine($"The smallest positive number is: {smallestPositive}");
+        }
+        else
+        {
+            Console.WriteLine($"No positive numbers were entered.");
+        }
         
+        numbers.Sort();
+        Console.WriteLine("The sorted list is:");
+        foreach(int number in numbers)
+        {
+            Console.WriteLine($" {number}");
+        }
     }
 }
