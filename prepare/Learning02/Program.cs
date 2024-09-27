@@ -16,7 +16,7 @@ class Program
         job2._startYear = 2022;
         job2._endYear = 2023;
 
-        Console.WriteLine(job1._company);
-        Console.WriteLine(job2._company);
+        job1.Display();
+        job2.Display();
     }
 }
