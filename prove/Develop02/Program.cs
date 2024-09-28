@@ -16,6 +16,27 @@ namespace JournalApp
             Response = response;
             Date = date;
         }
+        
+        public string ToCsvFormat()
+        {
+            return $"\"{Date}\",\"{Prompt}\",\"{Response}\"";
+        }
+
+        public static Entry FromCsvFormat(string csvLine)
+        {
+            string[] parts = csvLine.Split(new[] { "\",\"" }, StringSplitOptions.None);
+            if (parts.Length == 3)
+            {
+                string date = parts[0].Trim('"');
+                string prompt = parts[1].Trim('"');
+                string response = parts[2].Trim('"');
+                return new Entry(prompt, response, date);
+            }
+            else
+            {
+                throw new FormatException("CSV line is not in the correct format.");
+            }
+        }
 
         public override string ToString()
         {
@@ -126,9 +147,10 @@ namespace JournalApp
             {
                 using (StreamWriter writer = new StreamWriter(filename))
                 {
+                    writer.WriteLine("\"Date\",\"Prompt\",\"Response\"");
                     foreach (var entry in journal)
                     {
-                        writer.WriteLine(entry.ToFileFormat());
+                        writer.WriteLine(entry.ToCsvFormat());
                     }
                 }
                 
@@ -146,18 +168,23 @@ namespace JournalApp
 
             try
             {
+                journal.Clear();
+
                 using (StreamReader reader = new StreamReader(filename))
-                {
-                    journal.Clear();
+                {                    
                     string line;
+                    bool isHeader = true;
+
                     while ((line = reader.ReadLine()) != null)
                     {
-                        string[] parts = line.Split('|');
-                        if (parts.Length == 3)
+                        if (isHeader)
                         {
-                            Entry entry = new Entry(parts[1], parts[2], parts[0]);
-                            journal.Add(entry);
+                            isHeader = false;
+                            continue;
                         }
+                        Entry entry = Entry.FromCsvFormat(line);
+                        journal.Add(entry);
+ 
                     }
                 }
                 Console.WriteLine($"File successfully loaded");
@@ -170,3 +197,14 @@ namespace JournalApp
         }
     }
 }
+
+
+/*
+1. I made possible to save and load journal entries in CSV format. 
+now the user can open the journal in Excel.
+
+2. The program gives the users different prompts to answer. 
+
+3. I included error messages for saving and loading file, so users can know 
+if something goes wrong. 
+*/
