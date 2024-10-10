@@ -23,4 +23,11 @@ public class Fraction
         _top = top;
         _bottom = bottom;
     }
+
+    // Temporary code to verify if we can create the functions
+
+    public void DisplayFraction()
+    {
+        Console.WriteLine($"{_top}/{_bottom}");
+    }
 }
