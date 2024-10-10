@@ -24,10 +24,24 @@ public class Fraction
         _bottom = bottom;
     }
 
-    // Temporary code to verify if we can create the functions
-
-    public void DisplayFraction()
+    public int GetTop()
     {
-        Console.WriteLine($"{_top}/{_bottom}");
+        return _top;
     }
+
+    public void SetTop(int top)
+    {
+        _top = top;
+    }
+
+    public int GetBottom()
+    {
+        return _bottom;
+    }
+
+    public void SetBottom(int bottom)
+    {
+        _bottom = bottom;
+    }
+
 }

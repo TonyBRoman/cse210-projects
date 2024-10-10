@@ -9,8 +9,6 @@ class Program
         Fraction frac2 = new Fraction(6);
         Fraction frac3 = new Fraction(6, 7);
         
-        frac1.DisplayFraction();
-        frac2.DisplayFraction();
-        frac3.DisplayFraction();
+    
     }
 }
